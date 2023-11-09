@@ -7,7 +7,7 @@ import { LoginUser } from "../redux/slices/dataSlice";
 export default function AdminLogin() {
   const [formData, setFormData] = useState({});
   const Login = useSelector((state) => state.User.value.login)
-  const {token , access} = Login;
+  const { token, access } = Login;
   // const token = localStorage.getItem("token");
   // const access = localStorage.getItem("access")
   const dispatch = useDispatch();
@@ -16,13 +16,14 @@ export default function AdminLogin() {
     e.preventDefault();
     dispatch(LoginUser(formData));
   };
+
   useEffect(() => {
-    if(token && access){
+    if (token && access) {
       navigate("/admin/dashboard")
-      
+
     }
-    
-  }, [token,access]);
+
+  }, [token, access]);
   return (
     <div className="register-container">
       <div className="imagediv">

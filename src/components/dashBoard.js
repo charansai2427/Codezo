@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
-import{AiFillDelete, AiOutlineArrowRight}from "react-icons/ai";
-import {Progress} from "reactstrap";
+import { AiFillDelete, AiOutlineArrowRight } from "react-icons/ai";
+import { Progress } from "reactstrap";
 import "../styles/dashboard.css";
+import { Link } from "react-router-dom";
 
+import BuildProfile from "../components/buildmyprofile";
 import {
   FormGroup,
   Label,
@@ -21,35 +23,45 @@ import {
   CardText
 } from "reactstrap";
 
-import { RegisterUser, getAllJobs, getAllUsers, postData ,deleteUser,deleteJob} from "../redux/slices/dataSlice";
+import { RegisterUser, getAllJobs, getAllUsers, postData, deleteUser, deleteJob } from "../redux/slices/dataSlice";
 import { useNavigate } from "react-router-dom";
 export default function DashBoard() {
-  
+
   const [modal, setModal] = useState(false);
   const [modal1, setModal1] = useState(false);
   const [onOff, setOnOff] = useState(false);
+  const [show, setShow] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
   const [formData1, setFormData1] = useState({});
   // const[deleteUser1,setDeleteUser1] = useState({})
+  const email = localStorage.getItem("email");
+  const userId = localStorage.getItem("userId");
+
   console.log(formData1);
   const allUsers = useSelector((state) => state.User.value.allUsers);
   const jobData = useSelector((state) => state.User.value.jobData);
-  
-  
-const onHandleClick5 =(id) =>{
- console.log( dispatch(deleteUser({userId : id})));
- window.location.reload();
 
-}
 
-const onHandleClick6 =(id) =>{
-  console.log( dispatch(deleteJob({jobId : id})));
-  window.location.reload();
- 
- }
-  
+  const onHandleClick5 = (id) => {
+    console.log(dispatch(deleteUser({ userId: id })));
+    window.location.reload();
+
+  }
+  const handleSubmit = () => {
+    setShow(!show)
+  }
+  const onHandleClick6 = (id) => {
+    console.log(dispatch(deleteJob({ jobId: id })));
+    window.location.reload();
+
+  }
+
+  const onHandleClick7 = () => {
+    window.location.reload('/admin/dashboard')
+  }
+
   const toggle = () => setModal(!modal);
   const toggle1 = () => {
     setModal1(!modal1)
@@ -79,145 +91,140 @@ const onHandleClick6 =(id) =>{
   useEffect(() => {
     dispatch(getAllUsers());
     if (!token && !access) {
-      navigate("/admin/login");
+      navigate("/login");
 
     }
 
 
   }, [token, access]);
-  
+
 
   return (
 
     <div className="dashboard-container">
-      <div className="bar" style={{width:'100vw',height:'6vh',backgroundColor:'rgb(244,179,74)'}}></div>
+
+      <div className="bar" style={{ width: '100vw', height: '6vh', backgroundColor: 'rgb(244,179,74)' }}></div>
       <div className="container d-flex justify-content-between">
         <div >
           <img
-            src="https://res.cloudinary.com/cliqtick/image/upload/v1692600339/icons/logo-techie-_IE_uqk1bc.png" style={{ width: "10em",height:'9vh',marginLeft:'-3.5em',marginTop:'1em'}}
+            src="https://res.cloudinary.com/cliqtick/image/upload/v1692600339/icons/logo-techie-_IE_uqk1bc.png" onClick={onHandleClick7} style={{ width: "10em", height: '9vh', marginLeft: '-3.5em', marginTop: '1em', cursor: 'pointer' }}
           />
         </div>
         <div>
-          <input type="search" placeholder="Search by Keyboard / desigination / role / company" style={{ position:'absolute',top:'3.5em',left:'23em', borderRadius: '50px', width: '27em', height: '3em', border: 'solid rgb(232,235,238)' }} />
-          <BiSearch style={{ position:"relative",top:'1.3em',left:"-17.5em", fontSize: '1.5em',color:'gray' }} />
+          <input type="search" placeholder="Search by Keyboard / desigination / role / company" style={{ position: 'absolute', top: '3.5em', left: '18em', borderRadius: '50px', width: '27em', height: '3em', border: 'solid rgb(232,235,238)' }} />
+          <BiSearch style={{ position: "absolute", top: '3em', left: "28em", fontSize: '1.5em', color: 'gray' }} />
         </div>
       </div>
-                                      
+
       <div className="drop">
-                <p className="downbtn" >Jobs</p>
-                <div className="drop-content">
-                  <div className="column">
-                    <h5 className="job">Jobs by Hot Skills</h5>
-                  <a href="#">Python</a>
-                  <a href="#">Java</a>
-                  <a href="#">Javascript</a>
-                  <a href="#">React Js</a>
-                  <a href="#">PHP</a>
-                  </div>
+        <p className="downbtn" >Jobs</p>
+        <div className="drop-content">
+          <div className="column">
+            <h5 className="job">Jobs by Hot Skills</h5>
+            <a href="#">Python</a>
+            <a href="#">Java</a>
+            <a href="#">Javascript</a>
+            <a href="#">React Js</a>
+            <a href="#">PHP</a>
+          </div>
 
-                  <div className="left"></div>
+          <div className="left"></div>
 
-                  <div className="column">
-                    <h5 className="jloc">Jobs at Top Location</h5>
-                  <a href="#">Remote</a>
-                  <a href="#">Delhi/Delhi INR</a>
-                  <a href="#">Mumbai</a>
-                  <a href="#">Banglore</a>
-                  <a href="#">Hyderabad</a>
-                  <a href="#">Chennai</a>
-                  <a href="#">Pune</a>
+          <div className="column">
+            <h5 className="jloc">Jobs at Top Location</h5>
+            <a href="#">Remote</a>
+            <a href="#">Delhi/Delhi INR</a>
+            <a href="#">Mumbai</a>
+            <a href="#">Banglore</a>
+            <a href="#">Hyderabad</a>
+            <a href="#">Chennai</a>
+            <a href="#">Pune</a>
 
-                  </div>
-                </div>
-              </div>
+          </div>
+        </div>
+      </div>
 
-  <div className="build">
-    <h5 className="profile">Build My Profile</h5>
-    <Progress
-  striped
-  color="info"
-  value={50}
-  style={{width:'14em',height:'0.6em'}}
-/>
-  </div>
+      <div className="build">
 
-      <hr/>
+        <span onClick={handleSubmit} style={{ color: 'red', fontSize: '1.5em' }}  >Build My Profile</span>
+
+        <Progress
+          striped
+          color="info"
+          value={50}
+          style={{ width: '14em', height: '0.6em' }}
+        />
+      </div>
+      <div className="border rounded-pill p-2 border-success text-success" style={{ width: '4.5em', marginLeft: '65em', marginTop: "-2.5em" }}>
+        iFollow
+      </div>
+      <div className="profile-name">
+        <p>{email && email.slice(0, 2).toUpperCase()}</p>
+      </div>
+
+
+      <hr />
 
       <div className="d-flex w-100">
-      <input type="checkbox" id="check"/>
-         <label for="check">
-           <i className="fas fa-bars" id="btn"></i>
-           <i className="fas fa-times" id="cancel"></i>
-           
-         </label>
-         <div className="sidebar">
+        <input type="checkbox" id="check" />
+        <label for="check">
+          <i className="fas fa-bars" id="btn"></i>
+          <i className="fas fa-times" id="cancel"></i>
 
-           <a href="#" className="active">
-             <i className="fas fa-qrcode"></i>
-             <span>Dashboard</span>
-           </a>
-           <a href="#">
-           <i className="fa-solid fa-users" ></i>
-            <span onClick={onHandleClick2}>Users</span>
-           </a>
-           <a href="#">
-           <i className="fa-solid fa-user" ></i>
-              <span onClick={toggle}>Add User</span>
-           </a>
-           <a href="#">
-           <i className="fa-solid fa-explosion" ></i>
-               <span  onClick={onHandleClick4}>Jobs</span>
-           </a>
-           <a href="#">
-           <i class="fa-solid fa-bomb" ></i>
-              <span onClick={toggle1}>Add Jobs</span>
-           </a>
-           <a href="/login">
-           <i className="fa-solid fa-arrow-right-from-bracket" ></i>
-              <span onClick={() => {
+        </label>
+        <div className="sidebar">
+
+          <a href="#" className="active">
+            <i className="fas fa-qrcode"></i>
+            <span >Dashboard</span>
+          </a>
+
+          <a href="#">
+            <i className="fa-solid fa-user" ></i>
+            <span onClick={toggle}>Add User</span>
+          </a>
+          <a href="#">
+            <i className="fa-solid fa-user-secret"></i>
+            <span onClick={onHandleClick2}>Saved Users</span>
+          </a>
+
+          <a href="#">
+            <i className="fa-solid fa-magnifying-glass"></i>
+            <span onClick={toggle1}>Apply Job</span>
+          </a>
+          <a href="#">
+            <i className="fa-solid fa-cloud"></i>
+            <span onClick={onHandleClick4}>Saved Jobs</span>
+          </a>
+          <a href="/login">
+            <i className="fa-solid fa-arrow-right-from-bracket" ></i>
+            <span onClick={() => {
               localStorage.clear();
               window.location.reload()
             }}>Logout</span>
-           </a>
-           
-         </div>
+          </a>
 
-        {/* <div className="border text-shadow m-3 p-5">
-          <ol
-            style={{ listStyle: "none", lineHeight: "3rem", cursor: "pointer" }}
-          >
-            
+        </div>
 
-            <li onClick={onHandleClick2}>Users</li>
-            <li onClick={toggle}>Add User</li>
-            <li onClick={onHandleClick4}>Jobs</li>
-            <li onClick={toggle1}>Add Job</li>
-            <li onClick={() => {
-              localStorage.clear();
-              window.location.reload()
-            }}>LogOut</li>
-          </ol>
-        </div> */}
         {
           onOff ?
-            <div style={{ width: "100%", display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "1rem" ,fontSize:'1em',marginLeft:'15em'}}>
+            <div style={{ width: "100%", display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "1rem", fontSize: '1em', marginLeft: '16em' }}>
               {allUsers &&
-                allUsers.map((e,index) => {
+                allUsers.map((e, index) => {
                   return (
                     <div className="" >
                       <Card
                         className="my-3"
                         style={{
-                          width: "15em", backgroundColor:'rgb(250,225,184)'
+                          width: "15em", backgroundColor: 'rgb(250,225,184)'
                         }}
                       >
-  <div className="close" key={e.id}>
-  <button type="button" className="delete" onClick={() => onHandleClick5(e._id)}>X</button> 
-  {/* <button type="button" class="delete" >X</button>  */}
-    </div>
+                        <div className="close" key={e.id}>
+                          <button type="button" className="delete" onClick={() => onHandleClick5(e._id)}>X</button>
+                        </div>
                         <CardBody>
                           <CardTitle tag="h5">{e.username}</CardTitle>
-                          <CardText style={{textAlign:'start'}}>
+                          <CardText style={{ textAlign: 'start' }}>
                             <div>
                               <Label>Email:</Label>
                               {e.email}
@@ -235,61 +242,60 @@ const onHandleClick6 =(id) =>{
                 })}
             </div>
             :
-            <div style={{ width: "80%", display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "1rem",marginLeft:"14em" }} className="ps-2">
-            {jobData &&
-              jobData.map((e) => {
-                return (
-                  <div>
-                    <Card
-                      className="my-2"
-                      style={{
-                        width: "18rem",backgroundColor:'rgb(250,225,184)'
-                      }}
-                    >
+            <div style={{ width: "80%", display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "1rem", marginLeft: "16em" }} className="ps-2">
+              {jobData &&
+                jobData.map((e) => {
+                  return (
+                    <div>
+                      <Card
+                        className="my-2"
+                        style={{
+                          width: "18rem", backgroundColor: 'rgb(250,225,184)'
+                        }}
+                      >
 
-                <div className="close" key={e.id}>
-  <button type="button" className="delete" onClick={() => onHandleClick6(e._id)} >X</button> 
-  {/* <button type="button" class="delete" >X</button>  */}
-    </div>
-                      <CardBody>
-                        <CardTitle tag="h5">{e.title}</CardTitle>
-                        <CardText style={{textAlign:"start"}}>
-                          <div>
-                            <Label className="" style={{ fontWeight: "500" }}>Company :</Label>
-                            {e.company}
-                          </div>
-                          <div>
-                            <Label>Role :</Label>
-                            {e.role}</div>
-                          <div>
-                            <Label>State :</Label>
-                            {e.States}</div>
-                          <div>
-                            <Label>Employment Type :</Label>
-                            {e.employmenttype}</div>
-                          <div>
-                            <Label>Functional Area :</Label>
-                            {e.functionalarea}</div>
-                          <div>
-                            <Label>Experience :</Label>
-                            {e.experience}</div>
-                          <div>
-                            <Label>Skills :</Label>
-                            {e.skills}</div>
-                          <div>
-                            <Label>Openings :</Label>
-                            {e.openings}</div>
-                        </CardText>
+                        <div className="close" key={e.id}>
+                          <button type="button" className="delete" onClick={() => onHandleClick6(e._id)} >X</button>
+                        </div>
+                        <CardBody>
+                          <CardTitle tag="h5">{e.title}</CardTitle>
+                          <CardText style={{ textAlign: "start" }}>
+                            <div>
+                              <Label className="" style={{ fontWeight: "500" }}>Company :</Label>
+                              {e.company}
+                            </div>
+                            <div>
+                              <Label>Role :</Label>
+                              {e.role}</div>
+                            <div>
+                              <Label>State :</Label>
+                              {e.States}</div>
+                            <div>
+                              <Label>Employment Type :</Label>
+                              {e.employmenttype}</div>
+                            <div>
+                              <Label>Functional Area :</Label>
+                              {e.functionalarea}</div>
+                            <div>
+                              <Label>Experience :</Label>
+                              {e.experience}</div>
+                            <div>
+                              <Label>Skills :</Label>
+                              {e.skills}</div>
+                            <div>
+                              <Label>Openings :</Label>
+                              {e.openings}</div>
+                          </CardText>
 
-                      </CardBody>
+                        </CardBody>
 
-                    </Card>
-                  </div>
-                );
-              })}
+                      </Card>
+                    </div>
+                  );
+                })}
 
-          </div>
-              }
+            </div>
+        }
       </div>
       <div style={{ width: "100%" }}>
         <Modal isOpen={modal} toggle={toggle}>
@@ -314,7 +320,7 @@ const onHandleClick6 =(id) =>{
               </FormGroup>
               <FormGroup row>
                 <Label for="exampleEmail" sm={2}>
-                Username:
+                  Username:
                 </Label>
                 <Col sm={10}>
                   <Input
@@ -553,6 +559,12 @@ const onHandleClick6 =(id) =>{
           </ModalBody>
         </Modal>
       </div>
+      <div className={`my ${show ? "open" : "closes"}`} style={{ marginTop: '2em', marginRight: '-4em' }}>
+        <BuildProfile />``
+
+      </div>
     </div>
+
+
   );
 }

@@ -6,7 +6,10 @@
   margin: 0;
   padding: 0;
   text-decoration: none;
+  
 }
+
+
 .drop .downbtn {
   outline: none;
   color:gray;
@@ -16,7 +19,7 @@
   cursor: pointer;
   position: absolute;
   top: 2.3em;
-  left: 850px;
+  left: 750px;
   font-size: 1.5em;
   &:hover{
     cursor: pointer;
@@ -29,16 +32,16 @@
 }
 .drop-content {
   display: none;
-
+  
   z-index: 1;
   margin:0;
   position: absolute;
   top:7em;
-  left: 35em;
+  left: 30em;
   width: 60%;
   height: 0px;
-font-size: 1em;
-text-align: start;
+  font-size: 1em;
+  text-align: start;
 }  
 .drop:hover .drop-content {
   display: block;
@@ -52,12 +55,13 @@ text-align: start;
   font-size: 0.8em;
   background-color:white;
   border: 1px solid gray;
-
+  
 }
 .column a {
+  background-color:skyblue ;
+  color:black;
   font-size: 0.9em;
   float: none;
-  color:gray;
   padding:10px;
   text-decoration: none;
   display: block;
@@ -72,10 +76,22 @@ text-align: start;
 }
 
 .build{
-  margin-left: 60em;
+  margin-left: 53em;
   margin-top: -2.5em;
+  opacity: 100%;
+  cursor: pointer;
+  &:hover{
+color:black;
+  }
 }
 
+.open{
+  display: block;
+}
+
+.closes{
+  display: none;
+}
 .delete {  
   display: flex;
   align-items: center;
@@ -110,11 +126,12 @@ text-align: start;
 
 .sidebar{
   position: fixed;
-  width: 185px;
+  width: 200px;
   left: -240px;
   height: 100%;
   background-color: #fff;
   transition: all .5s ease;
+  text-decoration: double;
 }
 .sidebar header{
   font-size: 28px;
@@ -122,7 +139,7 @@ text-align: start;
   line-height: 70px;
   text-align: center;
   background-color: #fff;
-  user-select: none;
+  /* user-select: none; */
   font-family: 'Lato', sans-serif;
 }
 .sidebar a{
@@ -133,7 +150,6 @@ text-align: start;
   line-height: 65px;
   padding-left: 30px;
   box-sizing: border-box;
-  border-left: 5px solid transparent;
   font-family: 'Lato', sans-serif;
   transition: all .5s ease;
 }
@@ -149,6 +165,7 @@ a.active,a:hover{
 .sidebar a span{
   letter-spacing: 1px;
   text-transform: uppercase;
+  text-decoration: none;
 }
 #check{
   display: none;
@@ -159,7 +176,7 @@ label #btn,label #cancel{
   cursor: pointer;
   color:rgb(114, 103, 85);
   border-radius: 5px;
-  margin: 15px 30px;
+  margin: 0px 25px;
   font-size: 29px;
   background-color:rgb(244,179,74);
   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
@@ -181,16 +198,16 @@ label #cancel{
   left: 0;
 }
 #check:checked ~ label #btn{
-  margin-left: 180px;
+  margin-left: 200px;
   opacity: 0;
   visibility: hidden;
 }
 #check:checked ~ label #cancel{
-  margin-left: 180px;
+  margin-left: 200px;
   opacity: 1;
   visibility: visible;
 }
-@keyframes(max-width : 800px){
+@mediascreen (max-width : 800px){
   .sidebar{
     height: auto;
     width: 70px;
@@ -257,3 +274,39 @@ p {
   color: black;
   margin: 0;
 }
+
+
+span{
+  border: none;
+  outline: none;
+  text-decoration: none;
+}
+
+.profile-name{
+  margin-left:48em;
+  margin-top: -2em;
+}
+
+
+
+@keyframes dashboard-containerMaxWidth {
+  0% {
+    max-width: 100%;
+  }
+  100% {
+    max-width: 50%;
+  }
+}
+
+@keyframes dashboard-containerWidth {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 50%;
+  }
+}
+
+
+
+

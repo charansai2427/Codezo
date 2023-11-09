@@ -1,65 +1,51 @@
-import React, { useEffect } from "react";
+import React, { useEffect ,useState} from "react";
 import "../styles/buildmyprofile.scss";
 import { GoSearch } from "react-icons/go";
-import { Link } from "react-router-dom";
+import { MdModeEditOutline} from "react-icons/md";
+
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/home.scss";
 import "../styles/buildmyprofile.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../redux/slices/dataSlice";
+import { Progress } from "reactstrap";
+
 
 const BuildProfile = () => {
   const userId = localStorage.getItem("userId");
   const email = localStorage.getItem("email");
+  const access = localStorage.getItem("access");
+  const [axis,setAxis] = useState("");
+  console.log(axis);
   const userDetails = useSelector((state) => state.User.value.userDetails);
   console.log(userDetails);
+const navigate = useNavigate();
+  const HandleClock=() =>{
+   window.location.reload('/profile/edit/:userId')
+   }
+  //  const HandleTrick=()=>{
+  //   navigate('/profile/edit/:userId')
+  //  }
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUser({ userId: userId }));
+    setAxis(access)
   }, []);
+
   return (
     <div className="buldmyprofile-container  ">
-      <div className="home-container">
-        <div className="line"></div>
-        <div className="home-container-header">
-          <div>
-            <img
-              className="logo"
-              src="https://res.cloudinary.com/cliqtick/image/upload/v1692600339/icons/logo-techie-_IE_uqk1bc.png"
-            />
-          </div>
-          <div className="d-flex justify-content-center align-items-center gap-3 border p-1 searchbar-div">
-            <div>
-              <input
-                className=" border-0 searchbar"
-                placeholder="Search by Designation/KeyWord"
-              />
-            </div>
-            <div className="h4 pt-1">
-              <GoSearch className="" />
-            </div>
-          </div>
-          <div>Jobs</div>
-          <Link
-            to={"/profile=/" + userId}
-            style={{
-              cursor: "pointer",
-              textDecoration: "none",
-              color: "black",
-            }}
-          >
-            Build My Profile
-          </Link>
-          <div className="border rounded-pill p-2 border-success text-success">
-            iFollow
-          </div>
-          <div className="profile-name">
-            <p>{email && email.slice(0, 2).toUpperCase()}</p>
-          </div>
-        </div>
-      </div>
      
       <div className="container profile-container">
-        <h2>Profile</h2>
+        <p style={{margin:'0em',fontSize:'2em',fontWeight:'0em'}}>Profile</p>
+        <div className="profile-pic-container">
+           <div className="profile-pic">
+            {
+              userDetails? <img className="profile-image" src={userDetails.profile_pic} alt="Img"/> :  <p className="h1" >{email && email.slice(0,2).toUpperCase()}</p>
+            }
+          
+            <MdModeEditOutline  className="edit-icon"/> 
+           </div>
+        </div>
         <div className="profile-div">
           <div className="profile-details">
             <div className="no1">
@@ -105,7 +91,7 @@ const BuildProfile = () => {
             <div className="no1">
             
               <div>
-                <label>Phone Number</label>
+                <label>Phone Number :</label>
               </div>
               <div>
                 <input
@@ -145,10 +131,15 @@ const BuildProfile = () => {
             <textarea readOnly cols={50}>{`${userDetails.gender? userDetails.gender:"N/A"}`}</textarea>
             </div>
           </div>
+          {
+            (axis === "Admin")?
+            <button onClick={HandleClock} style={{marginLeft:'30em',border:'1px solid gray',borderRadius:'20%',width:"4em"}}>Save</button>
+            :
+
           <div className="update">
-            <Link to={"/editDetails"}>    <button type="button">Update Details</button></Link>
-         
+           <Link to={"/profile/edit/" + userId}> <button type="button">Update Details</button></Link>       
           </div>
+          }
         </div>
       </div>
     </div>

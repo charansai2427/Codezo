@@ -1,4 +1,4 @@
-import { Form } from "react-router-dom";
+import { Form, useNavigate } from "react-router-dom";
 import { FormGroup, Label, Input, Button } from "reactstrap";
 import "../styles/register.css";
 import { useState } from "react";
@@ -6,11 +6,16 @@ import { useDispatch } from "react-redux";
 import { RegisterUser } from "../redux/slices/dataSlice";
 export default function Register() {
   const [formData, setFormData] = useState({});
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleClick = (e) => {
     e.preventDefault();
     console.log(dispatch(RegisterUser(formData)));
   };
+  const OnHandleClick1 = (e) => {
+    e.preventDefault();
+    navigate("/accounts/login")
+  }
   return (
     <div className="register-container">
       <div className="imagediv">
@@ -90,11 +95,13 @@ export default function Register() {
             <Input type="checkbox" />
             <Label check>I here by agree to terms and conditions</Label>
           </FormGroup>
+          <Label className="login " onClick={OnHandleClick1}> Already Have An Account ?</Label>
           <FormGroup className="text-center">
             <Button className="bg-success" onClick={handleClick}>
               Register
             </Button>
           </FormGroup>
+
         </Form>
       </div>
     </div>

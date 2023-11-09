@@ -26,3 +26,22 @@ Form{
     width: 50%;
     
 }
+
+.register{
+    
+    padding-left: 3em;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color:rgb(244,179,74)
+
+}
+
+.login{
+    
+    padding-left: 3em;
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+}

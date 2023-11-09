@@ -11,45 +11,71 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './components/home';
 import Login from './components/login';
 import BuildProfile from './components/buildmyprofile';
+import ProfileForm from './components/profileform';
+import Front from './components/frontPage';
+import UploadPic from './components/uploadPic';
+import UserDashBoard from './components/userDashBoard';
+import JobDetails from './components/jobDetails';
 function App() {
-   const router = createBrowserRouter([
-   
-    { 
-      path:"/home",
-      element:<Home/>
-    },
-    { 
-      path:"/profile=/:userId",
-      element:<BuildProfile/>,
-      // children : [
-      //   {
-      //     path : "/editDetails",
-      //     element : <ProfileForm/>
-      //   }
-      // ]
+  const router = createBrowserRouter([
+
+    {
+      path: "/",
+      element: <Front />
     },
     {
-      path :"accounts/login",
-      element:<div>Login</div>
+      path: "/home",
+      element: <Home />
+    },
+    
+    {
+      path: "user/jobdetails/:jobid",
+      element: <JobDetails/>
+    },
+    {
+      path: "/userDashBoard",
+      element: <UserDashBoard />
     },
 
     {
-      path :"accounts/register",
-      element:<Register/>
+      path: "/frontpage",
+      element: <Front />
+    },
+    {
+      path: "accounts/login",
+      element: <Login />
+    },
+    {
+      path: "/profile=/:userId",
+      element: <BuildProfile />,
+    },
+    {
+      path: "/profile/edit/:userId",
+      element: <ProfileForm />
+    },
+
+    {
+      path: "accounts/register",
+      element: <Register />
     },
     {
       path: "admin/dashboard",
-      element: <DashBoard/>
+      element: <DashBoard />
     },
 
-      {
-        path:"/login",
-        element:<AdminLogin/>
-      },
-   ])
+    {
+      path: "/login",
+      element: <AdminLogin />
+    },
+
+    {
+      path: "/profile/edit-pic",
+      element: <UploadPic />
+    }
+  ])
   return (
     <div className="App">
-             <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </div>
   );
 }

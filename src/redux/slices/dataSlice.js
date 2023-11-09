@@ -13,7 +13,11 @@ const dataSlice = createSlice({
                 jobData: [],
                 deleteJob:[],
                 deleteUser:[],
-                userDetails: {}
+                userDetails: {},
+                update: {},
+                upload : {},
+                recruiter :[],
+
              }
     },
 
@@ -86,6 +90,33 @@ builder.addCase(getUser.fulfilled , (state,action)=>{
 builder.addCase(getUser.rejected ,(state,action)=>{
   state.error = action.error;
 })
+builder.addCase(updateUser.fulfilled , (state,action)=>{
+      
+  state.value.update = action.payload;
+})
+
+builder.addCase(updateUser.rejected ,(state,action)=>{
+  state.error = action.error;
+
+})
+
+builder.addCase(uploadImage.fulfilled , (state,action)=>{
+      
+  state.value.upload = action.payload;
+})
+
+builder.addCase(uploadImage.rejected ,(state,action)=>{
+  state.error = action.error;
+})
+
+builder.addCase(getonerecruiter.fulfilled,(state,action)=>{
+  console.log(action.payload);
+   state.value.recruiter = action.payload;
+ })
+
+ builder.addCase(getonerecruiter.rejected,(state,action)=>{
+  state.value.error = action.error;
+})
   }
 })
 
@@ -156,5 +187,25 @@ export const getUser = createAsyncThunk("getUser",async({userId}) => {
   })
   return data;
 })
+
+export const updateUser = createAsyncThunk("updateUser", async(arg) => {
+  console.log(arg);
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+  const {data} = await axios.patch(baseUrl + "/users/updateUser/" + userId,  arg,
+
+  )
+  return data;
+})
+
+export const uploadImage  = createAsyncThunk("cloudinary", async(arg) => {
+  console.log(arg);
+  const {data} = await axios.post("https://api.cloudinary.com/v1_1/dzeek4uww/image/upload",arg) 
+  return data
+})
+
+export const getonerecruiter = createAsyncThunk("getonerecruiter", async(jobid)=>{
+  const {data} = await axios.get(baseUrl +"/jobs/get/" + jobid);
+  return data;
+})
 export default dataSlice.reducer;
-// export const {deleteUser} = dataSlice.actions;
